@@ -1,14 +1,17 @@
-import { fetch } from "next/dist/compiled/@edge-runtime/primitives"
+import { getProductById } from "@/app/services/productService";
 
-export default async function Slug({ params }) {
+export default async function Slug({params}) {
     
-  const response =  await fetch("https://dummyjson.com/products/" +params.slug);
-  const product= await response.json();
+    const dataResponse = await getProductById(params.slug);
     
+    if(!dataResponse) {
+       return <h1>Ova stranica ne postoji</h1>
+       }
+
     return <>
-      <h1>{product.title}</h1>
-      <img  src={product.thumbnail} alt={product.title} width="300" />
-      <p>{product.description}</p>
-      <p style={{display:"flex", justifyContent: "center", marginTop:"30px", fontSize:"30px"}}>{product.price}$</p>
+      <h1>{dataResponse.title}</h1>
+      <img  src={dataResponse.thumbnail} alt={dataResponse.title} width="300" />
+      <p>{dataResponse.description}</p>
+      <p >{dataResponse.price}</p>
     </>
 }
