@@ -15,7 +15,6 @@ export const AuthProvider = ({children}) => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
-
     useEffect(() => {
         return auth.onAuthStateChanged(setupInitialUser);
 
