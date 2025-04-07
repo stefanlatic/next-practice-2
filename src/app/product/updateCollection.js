@@ -48,6 +48,35 @@ export default function UpdateCollection({ collection }) {
         }
     }
 
+    async function handleDelete() {
+        const potvrda = confirm(`Da li sigurno želiš da izbrišeš "${newData.title}"?`);
+        if (!potvrda) return;
+      
+        try {
+          const response = await fetch("/api/deleteCollection", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              id: collection.id,
+              collectionName: newData.collectionName,
+            }),
+          });
+      
+          const result = await response.json();
+      
+          if (!response.ok) {
+            throw new Error(result.error || "Greška pri brisanju!");
+          }
+      
+          alert("🗑️ Uspešno izbrisano!");
+      
+          window.location.reload(); 
+        } catch (error) {
+          console.error("Greška:", error);
+          alert(`❌ Greška: ${error.message}`);
+        }
+      }
+      
     return (
         <div className="mb-2">
             {editing ? (
@@ -73,11 +102,13 @@ export default function UpdateCollection({ collection }) {
                         onChange={(e) => setNewData({ ...newData, price: e.target.value })}
                         className="form-control mb-2"
                     />
-                    <button className="btn btn-success btn-sm me-2" onClick={updateCollection}>💾 Sačuvaj</button>
-                    <button className="btn btn-secondary btn-sm" onClick={() => setEditing(false)}>❌ Otkaži</button>
+                    <button className="btn btn-success btn-sm m-2" onClick={updateCollection}>💾 Sačuvaj</button>
+                    <button className="btn btn-secondary btn-sm m-2" onClick={() => setEditing(false)}>❌ Otkaži</button>
+                    <button className="btn btn-danger btn-sm m-2" onClick={handleDelete}>🗑️ Izbriši </button>
+
                 </>
             ) : (
-                <button className="btn btn-outline-primary btn-sm" onClick={() => setEditing(true)}>🔄 Update</button>
+                <button className="btn btn-outline-primary btn-sm" onClick={() => setEditing(true)}>🔄 Izmeni</button>
             )}
 
             {message && (
