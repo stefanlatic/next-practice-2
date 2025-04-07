@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import { useEffect, useState } from "react";
-import UpdateCollection from "./updateCollection";  // Dodaj import
+import UpdateCollection from "./updateCollection"; 
 
 export default function AllCollections() {
   const [collections, setCollections] = useState({});

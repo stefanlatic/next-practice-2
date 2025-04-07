@@ -5,7 +5,7 @@ export default function App() {
   return (
     <div>
       <h1>Proizvodi</h1>
-      <AllCollections />  {/* Pravilno renderovanje komponente */}
+      <AllCollections />  
     </div>
   );
 }
